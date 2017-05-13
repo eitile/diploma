@@ -1,6 +1,7 @@
 package sample;
 
 
+import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.File;
 
@@ -21,7 +22,12 @@ public class Main {
         PrinterJob job = PrinterJob.getPrinterJob();
         job.setPageable(new PDFPageable(document));
         job.setPrintService(myPrintService);
-        job.print();
+        if (job.printDialog()) {
+            try {job.print();}
+            catch (PrinterException exc) {
+                System.out.println(exc);
+             }
+         }   
     }
 
 }
